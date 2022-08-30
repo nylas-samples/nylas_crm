@@ -1,0 +1,38 @@
+<br>
+<form method="post" action='/mail_merge_fields' enctype="multipart/form-data">
+<div class="border-double border-4 border-sky-500 w-auto h-auto items-center place-content-center flex justify-center">
+<h1 class="text-3xl">Custom Mail Merge Fields</h1>
+</div>
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+  <label for="field_one">Field 1:</label>
+  <input type="text" id="field_one" name="field_one" value="<% if mail_merge_fields != [] %><%= mail_merge_fields[0][0].to_s %><% end %>">
+  <label for="field_one_desc">Field 1 Description:</label>
+  <input type="text" id="field_one_desc" name="field_one_desc" value="<% if mail_merge_fields != [] %><%=  mail_merge_fields[0][1].to_s %><% end %>"><br><br>
+  <label for="field_two">Field 2:</label>
+  <input type="text" id="field_two" name="field_two" value="<% if mail_merge_fields != [] %><%= mail_merge_fields[0][2].to_s %><% end %>">
+  <label for="field_two_desc">Field 2 Description:</label>
+  <input type="text" id="field_two_desc" name="field_two_desc" value="<% if mail_merge_fields != [] %><%=  mail_merge_fields[0][3].to_s %><% end %>"><br><br>
+  <label for="field_three">Field 3:</label>
+  <input type="text" id="field_three" name="field_three" value="<% if mail_merge_fields != [] %><%= mail_merge_fields[0][4].to_s %><% end %>">
+  <label for="field_three_desc">Field 3 Description:</label>
+  <input type="text" id="field_three_desc" name="field_three_desc" value="<% if mail_merge_fields != [] %><%=  mail_merge_fields[0][5].to_s %><% end %>"><br><br>
+  <label for="field_four">Field 4:</label>
+  <input type="text" id="field_four" name="field_four" value="<% if mail_merge_fields != [] %><%= mail_merge_fields[0][6].to_s %><% end %>">
+  <label for="field_four_desc">Field 4 Description:</label>
+  <input type="text" id="field_four_desc" name="field_four_desc" value="<% if mail_merge_fields != [] %><%= mail_merge_fields[0][7].to_s %><% end %>"><br><br>
+  <label for="field_five">Field 5:</label>
+  <input type="text" id="field_five" name="field_five" value="<% if mail_merge_fields != [] %><%= mail_merge_fields[0][8].to_s %><% end %>">
+  <label for="field_five_desc">Field 5 Description:</label>
+  <input type="text" id="field_five_desc" name="field_five_desc" value="<% if mail_merge_fields != [] %><%= mail_merge_fields[0][9].to_s %><% end %>"><br>     
+</div><br>
+ <div class="flex justify-center">
+ <button type="submit" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full">Submit</button>
+ <button type="button" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="location.href='/'">Cancel</button> 
+ </div>
+</form>
+<script>
+	var birthday = document.getElementById("birthday");
+	var utc = new Date().toJSON().slice(0,10);
+	birthday.value = utc;
+	birthday.max = utc;
+</script>

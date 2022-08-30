@@ -1,0 +1,88 @@
+<br>
+<div style="height: 900px;" class="bg-blue-300 border-blue-300 border-b p-4 m-4 rounded place-content-center max-h-full">
+<table class="table-auto">
+<thead>
+    <tr>
+      <th>Id</th>
+      <th>Given Name</th>
+      <th>Middle Name</th>
+      <th>Nickname</th>
+      <th>Surname</th>
+      <th>Birthday</th>
+      <th>Company</th>
+      <th>Notes</th>
+      <th>Picture</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Job Title</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% contacts.each do |item| %>
+		<tr>
+			<td>
+				<a href="/update_contact?id=<%= item[0] %>" class="text-blue-600 visited:text-purple-600">Update</a> | <a href="/delete_contact?id=<%= item[0] %>" class="text-blue-600 visited:text-purple-600">Delete</a>
+			</td>
+			<td><%= item[1] %></td>
+			<td><%= item[2] %></td>
+			<td><%= item[3] %></td>
+			<td><%= item[4] %></td>
+			<td><%= item[5] %></td>
+			<td><%= item[6] %></td>
+			<td><%= item[7] %></td>
+			<td><img src="<%= item[9] %>"></td>
+			<td><% email = item[10].scan(/(?<=email:).+/) %><%= email[0] %></td>
+			<td><% phone = item[11].scan(/(?<=:).+/) %> <%= phone[0] %></td>
+			<td><% street = item[12].scan(/(?<=street_address:).+/) 
+					     country = item[12].scan(/(?<=country:)(.*?,)/) 
+					     city = item[12].scan(/(?<=city:)(.*?,)/) 
+					     postal = item[12].scan(/(?<=postal_code:)(.*?,)/) 
+					     state = item[12].scan(/(?<=state:)(.*?,)/)
+					     begin
+							city = city[0][0].gsub(/,/,"") 
+					     rescue => error
+							city[0] = ""
+					     end
+					     begin
+							country = country[0][0].gsub(/,/,"") 
+					     rescue => error
+							country[0] = ""
+					     end
+					     begin
+							postal = postal[0][0].gsub(/,/,"") 
+					     rescue => error
+							postal[0] = ""
+					     end
+					     begin
+							state = state[0][0].gsub(/,/,"") 
+					     rescue => error
+							state[0] = ""
+					     end
+					     if street[0].to_s != ''
+							address = street[0].to_s + ", " + city.to_s + ", " + state.to_s + ", " + country.to_s + ", " + postal.to_s
+					     else
+							address = ""
+					     end
+					     %> <%= address %></td>
+			<td><%= item[13] %></td>
+		</tr>
+	<% end %>
+  </tbody>
+</table>
+<br>
+<div class="flex justify-center">
+<button class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_contacts?limit=0'">
+  First
+</button>&nbsp;&nbsp;&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_contacts?limit=<% aux_limit = limit.to_i %><% if aux_limit > 0%><% aux_limit = aux_limit - settings.limit %><% end %><%= aux_limit %>'">
+  Previous
+</button>&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_contacts?limit=<% if limit.to_i <= (tops.to_i / settings.limit )%><% limit = limit.to_i + settings.limit %><% end %><%= limit %>'">
+  &nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;&nbsp;
+</button>&nbsp;&nbsp;&nbsp;
+<button class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_contacts?limit=<%= tops = (tops.to_i / settings.limit) + 1  %>'">
+  Last
+</button>
+</div>
+</div>

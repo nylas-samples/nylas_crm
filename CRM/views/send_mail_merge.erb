@@ -1,0 +1,102 @@
+<form method="post" action='/send_mail_merge' enctype="multipart/form-data">
+<div class="border-double border-4 border-sky-500 w-auto h-auto items-center place-content-center flex justify-center">
+<p>
+<b>{given_name} {nickname} {surname}</b><br>
+<b>{birthday} {physical_address}</b><br>
+<% if merge[0][0] != nil %><b>{<%= merge[0][0] %>} : </b><%= merge[0][1] %><br><% end %>
+<% if merge[0][2] != nil %><b>{<%= merge[0][2] %>} : </b><%= merge[0][3] %><br><% end %>
+<% if merge[0][4] != nil %><b>{<%= merge[0][4] %>} : </b><%= merge[0][5] %><br><% end %>
+<% if merge[0][6] != nil %><b>{<%= merge[0][6] %>} : </b><%= merge[0][7] %><br><% end %>
+<% if merge[0][8] != nil %><b>{<%= merge[0][8] %>} : </b><%= merge[0][9] %><br><% end %>
+</p>
+</div>
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+	<label for="subject">Subject:</label>
+	<input type="text" id="subject" name="subject" value="" size="50"><br><br>
+	<label for="participants">Participants:</label>
+		<select name="participants" id="participants">
+			<option value=""></option>
+			<% contacts.each do |contact| %>
+				<% email = contact[10].scan(/(?<=email:).+/) %>
+				<% phone = contact[11].scan(/(?<=:).+/) %>
+				<% participant = email[0].to_s + "/" + contact[1] + "/" + phone[0].to_s + "/" + contact[0] %>
+				<option value="<%=participant%>"><%=email[0]%></option>
+			<% end %>
+		</select><br><br>
+		<input type="text" id="participants_list" name="participants_list" value="" size="50" readonly>
+		<input type="hidden" id="names_list" name="names_list" value="" size="50" readonly>
+		<input type="hidden" id="ids_list" name="ids_list" value="" size="50" readonly>
+		<div class="bg-blue-300 border-blue-300 border-b p-4 m-4 rounded place-content-center max-h-full flex justify-center items-center">
+			<button type="button" onclick="addRecipient()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add One</button>
+			&nbsp<button type="button" onclick="addAllRecipients()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add All</button>
+			&nbsp<button type="button" onclick="Clear()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Clear</button>
+		</div>
+		<div id="editor"></div>
+		<script src="https://unpkg.com/pell"></script>
+		<textarea name="body" id="body" rows=5 cols=49 style="display:none;"></textarea>
+</div><br>
+<div class="flex justify-center">
+ <button type="submit" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full">Submit</button>
+ <button type="button" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="location.href='/get_emails'">Cancel</button> 
+ </div>
+</form>
+</div>
+<script>
+const pell = window.pell;
+const editor = document.getElementById("editor");
+const area = document.getElementById("body");
+
+pell.init({
+  element: editor,
+  onChange: (html) => {
+    area.innerText = html;
+  }
+})
+
+	function addRecipient() {
+		var myReEmail = /^[^/]*/g;
+		var email = myReEmail.exec(document.getElementById("participants").value);
+		document.getElementById("participants_list").value = document.getElementById("participants_list").value + email + ";";
+		
+		var myReName = /\/.*?\//g;
+		var name = myReName.exec(document.getElementById("participants").value);
+		name = name.toString().substring(1);
+		name = name.slice(0,-1);
+		document.getElementById("names_list").value = document.getElementById("names_list").value + name + ";";
+		
+		var myReId = /\/(?!.*\/).+/g;
+		var id = myReId.exec(document.getElementById("participants").value);
+		id = id.toString().replace(/\//g,"")
+		document.getElementById("ids_list").value = document.getElementById("ids_list").value + id + ";";
+	}
+	
+	function addAllRecipients() {
+	var participants = document.getElementById("participants");
+    for (var i = 0; i < participants.length; i++) {
+		var myReEmail = /^[^/]*/g;
+		var myReName = /\/.*?\//g;
+		var myReId = /\/(?!.*\/).+/g;
+		var email = myReEmail.exec(participants.options[i].value);
+		if(!!email && email != ''){
+			document.getElementById("participants_list").value = document.getElementById("participants_list").value + email + ";";
+		}
+		var name = myReName.exec(participants.options[i].value);
+		if(!!name){
+			name = name.toString().substring(1);
+			name = name.slice(0,-1);
+			document.getElementById("names_list").value = document.getElementById("names_list").value + name + ";";
+		}
+		var id = myReId.exec(participants.options[i].value);
+		if(!!id){
+			id = id.toString().replace(/\//g,"")
+			document.getElementById("ids_list").value = document.getElementById("ids_list").value + id + ";";
+		}
+    }
+	}
+	
+	function Clear(){
+		document.getElementById("participants_list").value = "";
+		document.getElementById("names_list").value = "";
+		document.getElementById("ids_list").value = "";
+	}
+</script>
