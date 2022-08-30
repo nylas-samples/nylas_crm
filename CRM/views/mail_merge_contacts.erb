@@ -19,20 +19,20 @@
 </div>
 <div class="border-double border-4 border-sky-500 w-auto h-auto">
 <input type="hidden" id="id" name="id" value="">
-<input type="text" id="field1_name" style="font-weight:bold" name="field1_name" value="<%= fields[0][0] %>" readonly>&nbsp;&nbsp;&nbsp;
-<input type="text" id="field1_desc" style="font-weight:bold" name="field1_desc" value="<%= fields[0][1] %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field1_name" style="font-weight:bold" name="field1_name" value="<% if fields != [] %><%= fields[0][0] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field1_desc" style="font-weight:bold" name="field1_desc" value="<% if fields != [] %><%= fields[0][1] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
 <input type="text" id="field1" name="field1" value=""><br><br>
-<input type="text" id="field2_name" style="font-weight:bold" name="field2_name" value="<%= fields[0][2] %>" readonly>&nbsp;&nbsp;&nbsp;
-<input type="text" id="field2_desc" style="font-weight:bold" name="field2_desc" value="<%= fields[0][3] %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field2_name" style="font-weight:bold" name="field2_name" value="<% if fields != [] %><%= fields[0][2] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field2_desc" style="font-weight:bold" name="field2_desc" value="<% if fields != [] %><%= fields[0][3] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
 <input type="text" id="field2" name="field2" value=""><br><br>
-<input type="text" id="field3_name" style="font-weight:bold" name="field3_name" value="<%= fields[0][4] %>" readonly>&nbsp;&nbsp;&nbsp;
-<input type="text" id="field3_desc" style="font-weight:bold" name="field3_desc" value="<%= fields[0][5] %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field3_name" style="font-weight:bold" name="field3_name" value="<% if fields != [] %><%= fields[0][4] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field3_desc" style="font-weight:bold" name="field3_desc" value="<% if fields != [] %><%= fields[0][5] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
 <input type="text" id="field3" name="field3" value=""><br><br>
-<input type="text" id="field4_name" style="font-weight:bold" name="field4_name" value="<%= fields[0][6] %>" readonly>&nbsp;&nbsp;&nbsp;
-<input type="text" id="field4_desc" style="font-weight:bold" name="field4_desc" value="<%= fields[0][7] %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field4_name" style="font-weight:bold" name="field4_name" value="<% if fields != [] %><%= fields[0][6] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field4_desc" style="font-weight:bold" name="field4_desc" value="<% if fields != [] %><%= fields[0][7] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
 <input type="text" id="field4" name="field4" value=""><br><br>
-<input type="text" id="field5_name" style="font-weight:bold" name="field5_name" value="<%= fields[0][8] %>" readonly>&nbsp;&nbsp;&nbsp;
-<input type="text" id="field5_desc" style="font-weight:bold" name="field5_desc" value="<%= fields[0][9] %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field5_name" style="font-weight:bold" name="field5_name" value="<% if fields != [] %><%= fields[0][8] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
+<input type="text" id="field5_desc" style="font-weight:bold" name="field5_desc" value="<% if fields != [] %><%= fields[0][9] %><% end %>" readonly>&nbsp;&nbsp;&nbsp;
 <input type="text" id="field5" name="field5" value="">
 </div>
 <br>
@@ -57,28 +57,40 @@ function get_values(){
 	id.value = id_field;
 	
 	var fields1 = fields[2];
-	var fields1_value = myReValue1.exec(fields1);
-	var field1 = document.getElementById("field1");
-	field1.value = fields1_value;
+	if(typeof field1 !== "undefined"){
+		var fields1_value = myReValue1.exec(fields1);
+		var field1 = document.getElementById("field1");
+		field1.value = fields1_value;
+	}
 	
 	var fields2 = fields[3];
-	var fields2_value = myReValue2.exec(fields2);
-	var field2 = document.getElementById("field2");
-	field2.value = fields2_value;
+	if(typeof field2 !== "undefined"){
+		var fields2_value = myReValue2.exec(fields2);
+		var field2 = document.getElementById("field2");
+		field2.value = fields2_value;
+	}
 	
 	var fields3 = fields[4];
-	var fields3_value = myReValue3.exec(fields3);
-	var field3 = document.getElementById("field3");
-	field3.value = fields3_value;
+	if(typeof field3 !== "undefined"){
+		var fields3_value = myReValue3.exec(fields3);
+		var field3 = document.getElementById("field3");
+		field3.value = fields3_value;
+	}
 	
 	var fields4 = fields[5];
-	var fields4_value = myReValue4.exec(fields4);
-	var field4 = document.getElementById("field4");
-	field4.value = fields4_value;
+	if(typeof field4 !== "undefined"){
+		var fields4_value = myReValue4.exec(fields4);
+		var field4 = document.getElementById("field4");
+		field4.value = fields4_value;
+	}
 	
 	var fields5 = fields[6];
-	var fields5_value = myReValue5.exec(fields5);
-	var field5 = document.getElementById("field5");
-	field5.value = fields5_value;	
+	if(typeof field5 !== "undefined"){
+		var fields5_value = myReValue5.exec(fields5);
+		var field5 = document.getElementById("field5");
+		field5.value = fields5_value;
+	}
+}
+</script>	
 }
 </script>
