@@ -302,5 +302,5 @@ post '/send_mail_merge' do
 		emails_obj.send!(to: participants, subject: subject, body: body).to_h
 	}
 		
-	redirect to("/get_emails")	
+	redirect to("/display_emails")	
 end
