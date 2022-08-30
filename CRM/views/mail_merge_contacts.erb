@@ -11,7 +11,7 @@
 			<% i = 0 %>
 			<% contacts.each do |contact| %>
 				<% email = contact[10].scan(/(?<=email:).+/) %>
-				<% participant = contact[0] + "/" + email[0].to_s + "/" + merge[i][2] + "/" + merge[i][3] + "/" + merge[i][4] + "/" + merge[i][5] + "/" + merge[i][5] %>
+				<% participant = contact[0] + "/" + email[0].to_s + "/" + merge[i][2] + "/" + merge[i][3] + "/" + merge[i][4] + "/" + merge[i][5] + "/" + merge[i][6] %>
 				<% i = i + 1 %>
 				<option value="<%=participant%>"><%=email[0]%></option>
 			<% end %>
