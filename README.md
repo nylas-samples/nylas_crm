@@ -30,6 +30,7 @@ $ touch .env # Then add your env variables
 $ gem install dotenv
 $ gem install sinatra
 $ gem install sinatra-base
+$ gem install sinatra-contrib
 $ gem install sqlite3
 $ gem install nylas
 
