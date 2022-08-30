@@ -67,6 +67,7 @@ And go to `http://localhost:4567`
 The first you run the app, you need to select a couple of links.
 
 First, run `Contacts --> Sync Contacts`. This will create the db, setup all the tables and also sync the contacts.
+
 Then run `Events --> Create CRM Calendar`. This will create a new calendar and save the id on your `.env` file.
 
 After that, you can run whatever you want.
