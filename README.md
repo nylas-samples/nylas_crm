@@ -27,30 +27,50 @@ $ touch .env # Then add your env variables
 ### Install dependencies
 
 ```bash
-# To read .env files
 $ gem install dotenv
-
-# Makes http fun again
-$ gem install httparty
-
-# Shoes 4 GUI Toolkit
-$ gem install shoes --pre
+$ gem install sinatra
+$ gem install sinatra-base
+$ gem install sqlite3
+$ gem install nylas
 
 ```
 
 ## Usage
 
-Run the app using the `shoes` command:
+Clone the repository. Navigate to the `CRM` folder and open the `config.yml` file, which will contain the following:
 
-```bash
-$ shoes Shoes_Mail_Client.rb
+```
+crm_name: Nylas' CRM
+calendar_name: Nylas CRM Calendar
+calendar_description: Calendar for the Nylas CRM
+background_image: NylasDesktop.png 
+background_color: 4169E0
+panel_color: bg-blue-300
+panel_border: border-blue-300
+limit: 4
+email_limit: 10
+fetch_emails: 30
 ```
 
-When successfull, it will display a GUI window showing the first 5 emails from the inbox.
+This is our configuration file. If you want your CRM to display a different name and have a different welcome image, change `crm_name` and `background_image` accordingly. (The image must be inside the `public` folder).
+
+Change the `calendar_name` variable if you want your calendar to be named differently.
+
+Once your happy with the configuration, type the following command on a terminal window: 
+
+```bash
+$ ruby nylas_crm.rb
+```
+
+And go to `http://localhost:4567`
+
+The first you run the app, you need to select a couple of links.
+
+First, run `Contacts --> Sync Contacts`. This will create the db, setup all the tables and also sync the contacts.
+Then run `Events --> Create CRM Calendar`. This will create a new calendar and save the id on your `.env` file.
+
+After that, you can run whatever you want.
 
 ## Read the blog post
-[_why day 2022](https://www.nylas.com/blog/_why-day-2022-dev/)
 
 ## Learn more
-
-Visit our [Nylas Email API documentation](https://developer.nylas.com/docs/connectivity/email/) to learn more.
