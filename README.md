@@ -1,45 +1,56 @@
-# template-empty
-_description: An empty template for your code sample_
+# Nylas CRM
 
-Please include this sample in the [org readme](https://github.com/nylas-samples/.github/blob/main/profile/README.md)?
+This project will show you how to create a very basic CRM implemented some interestung capabilities like CRUD for Contacts, Events and Emails and even Mail Merge.
 
-<br />
+## Setup
 
-## Installation
+### System dependencies
 
-The recommended way to use this sample is ...
+- Ruby 3.1.1 or greater
 
-You can also clone the repository ...
+### Gather environment variables
 
-You'll find more detailed instructions ...
+You'll need the following values:
 
+```text
+CLIENT_ID = ""
+CLIENT_SECRET = ""
+ACCESS_TOKEN = ""
+```
 
-<br />
+Add the above values to a new `.env` file:
 
+```bash
+$ touch .env # Then add your env variables
+```
 
-## FAQ
+### Install dependencies
 
-Q: 
+```bash
+# To read .env files
+$ gem install dotenv
 
-A: 
+# Makes http fun again
+$ gem install httparty
 
+# Shoes 4 GUI Toolkit
+$ gem install shoes --pre
 
-<br />
+```
 
-## Get support
+## Usage
 
-If you found a bug or want to suggest a new [feature/use case/sample], please file an issue.
+Run the app using the `shoes` command:
 
-If you have questions, comments, or need help with code, we're here to help:
-- Email us at support@nylas.com
+```bash
+$ shoes Shoes_Mail_Client.rb
+```
 
-<br />
+When successfull, it will display a GUI window showing the first 5 emails from the inbox.
 
-## Contributing
+## Read the blog post
+[_why day 2022](https://www.nylas.com/blog/_why-day-2022-dev/)
 
-...
+## Learn more
 
-<br />
-
-## Authors
-- @
+Visit our [Nylas Email API documentation](https://developer.nylas.com/docs/connectivity/email/) to learn more.
