@@ -80,10 +80,10 @@ get '/sync_contacts' do
 			begin
 # Build out the address by concatenating different pieces
 				address = "city:" + contact.physical_addresses[0].city + 
-								", state:" + contact.physical_addresses[0].state +
-								", country:" + contact.physical_addresses[0].country +
-								", postal_code:" + contact.physical_addresses[0].postal_code + 
-								", street_address:" + contact.physical_addresses[0].street_address
+						  ", state:" + contact.physical_addresses[0].state +
+						  ", country:" + contact.physical_addresses[0].country +
+						  ", postal_code:" + contact.physical_addresses[0].postal_code + 
+						  ", street_address:" + contact.physical_addresses[0].street_address
 			rescue => error
 				address = ""
 			end
@@ -95,14 +95,14 @@ get '/sync_contacts' do
 			end
 # Insert the contact details into the database
 			conn.execute("insert into contacts(id,given_name,middle_name,nickname,
-			                                                   surname,birthday,company_name,notes,
-			                                                   picture_url,picture,emails,phone_numbers,
-			                                                   physical_address,job_title) values 
-			                                                   (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-			                    contact.id,contact.given_name,contact.middle_name,
-			                    contact.nickname,contact.surname,contact.birthday,
-			                    contact.company_name,contact.notes,contact.picture_url,
-			                    file_name,emails,phone,address,contact.job_title)
+			              surname,birthday,company_name,notes,
+			              picture_url,picture,emails,phone_numbers,
+			              physical_address,job_title) values 
+			              (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+			              contact.id,contact.given_name,contact.middle_name,
+			              contact.nickname,contact.surname,contact.birthday,
+			              contact.company_name,contact.notes,contact.picture_url,
+			              file_name,emails,phone,address,contact.job_title)
 		else
 # If the picture field is empty, we need to download the contact image		
 			if result[0][9] == ""
@@ -119,7 +119,7 @@ get '/sync_contacts' do
 				end
 # Update the contacts table				
 				conn.execute("update contacts set picture_url=?, picture=?
-									  where id=?",contact.picture_url, file_name, contact.id)
+							  where id=?",contact.picture_url, file_name, contact.id)
 				end
 		end
 	}
@@ -141,8 +141,8 @@ get '/display_contacts' do
 	contacts_all = conn.execute( "SELECT * FROM contacts")
 # Select all fields from the contact table using limits to help with pagination	
 	contacts = conn.execute( "SELECT * FROM contacts WHERE id NOT IN ( SELECT id FROM contacts
-											ORDER BY given_name ASC LIMIT #{limit} ) 
-											ORDER BY given_name ASC LIMIT #{settings.limit}" )
+							  ORDER BY given_name ASC LIMIT #{limit} ) 
+							  ORDER BY given_name ASC LIMIT #{settings.limit}" )
 # Add one to the total count of records
 	tops = contacts_all.length + 1
 # Close the DB connection	
@@ -211,10 +211,10 @@ post '/create_update_contact' do
 # If the street address parameters is filled, compose the address
 		if params[:street_address] != ''
 			address = "city:" + params[:city] + 
-							", state:" + params[:state] +
-							", country:" + params[:country] +
-							", postal_code:" + params[:postal_code] + 
-							", street_address:" + params[:street_address]
+					  ", state:" + params[:state] +
+					  ", country:" + params[:country] +
+					  ", postal_code:" + params[:postal_code] + 
+					  ", street_address:" + params[:street_address]
 		else
 			address = ""
 		end
@@ -235,17 +235,17 @@ post '/create_update_contact' do
 		file_name = ""
 # Create a new record on the contacts table
 		result = conn.execute("insert into contacts(id,given_name,middle_name,nickname,
-										  surname,birthday,company_name,notes,
-										  picture_url,picture,emails,phone_numbers,
-										  physical_address,job_title) values 
-										  (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-										  contact.id,params[:given_name],params[:middle_name],
-										  params[:nickname],params[:surname],params[:birthday],
-										  params[:company_name],params[:notes],contact.picture_url,
-										  file_name,emails,phone,address,params[:job_title])	
+							   surname,birthday,company_name,notes,
+							   picture_url,picture,emails,phone_numbers,
+							   physical_address,job_title) values 
+							   (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+							   contact.id,params[:given_name],params[:middle_name],
+							   params[:nickname],params[:surname],params[:birthday],
+							   params[:company_name],params[:notes],contact.picture_url,
+							   file_name,emails,phone,address,params[:job_title])	
 # Create a new record on the merge_mail table							  
 			conn.execute("insert into merge_mail(id,email,field1,field2,field3,field4,field5) 
-								  values (?,?,?,?,?,?,?)",contact.id,params[:email],"","","","","")
+						  values (?,?,?,?,?,?,?)",contact.id,params[:email],"","","","","")
 # Close the connection							  				
 		connection.end_connection()
 # Call the display_contacts action setting the limit as 0		
@@ -259,10 +259,10 @@ post '/create_update_contact' do
 # If the street address parameters is filled, compose the address		
 		if params[:street_address] != ""
 			address = "city:" + params[:city] + 
-							", state:" + params[:state] + 
-							", country:" + params[:country] +
-							", postal_code:" + params[:postal_code] + 
-							", street_address:" + params[:street_address]
+					  ", state:" + params[:state] + 
+					  ", country:" + params[:country] +
+					  ", postal_code:" + params[:postal_code] + 
+					  ", street_address:" + params[:street_address]
 		else
 			address = ""
 		end
@@ -280,19 +280,19 @@ post '/create_update_contact' do
 		end
 # Update the record on the contacts table
 		conn.execute("update contacts set given_name=?,middle_name=?,nickname=?,
-							  surname=?,birthday=?,company_name=?,notes=?,
-							  emails=?,phone_numbers=?,physical_address=?,job_title=? 
-							  where id=?",
-							  params[:given_name],params[:middle_name],
-							  params[:nickname],params[:surname],params[:birthday],
-							  params[:company_name],params[:notes],emails,
-							  phone,address,params[:job_title],params[:id])
+					  surname=?,birthday=?,company_name=?,notes=?,
+					  emails=?,phone_numbers=?,physical_address=?,job_title=? 
+					  where id=?",
+					  params[:given_name],params[:middle_name],
+					  params[:nickname],params[:surname],params[:birthday],
+					  params[:company_name],params[:notes],emails,
+					  phone,address,params[:job_title],params[:id])
 # Create the record on the merge_mail table
 		mail = conn.execute( "select * from merge_mail where id = ?", params[:id])
 		if mail == []
 			conn.execute("insert into merge_mail(id,email,field1,field2,field3,field4,field5) 
-								  values (?,?,?,?,?,?,?)",
-			                    contact.id,contact.emails[0].email,"","","","","")
+						  values (?,?,?,?,?,?,?)",
+			              contact.id,contact.emails[0].email,"","","","","")
 		end							  
 # Close the connection
 		connection.end_connection()
