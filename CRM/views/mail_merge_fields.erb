@@ -30,9 +30,3 @@
  <button type="button" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="location.href='/'">Cancel</button> 
  </div>
 </form>
-<script>
-	var birthday = document.getElementById("birthday");
-	var utc = new Date().toJSON().slice(0,10);
-	birthday.value = utc;
-	birthday.max = utc;
-</script>
