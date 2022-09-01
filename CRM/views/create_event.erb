@@ -53,7 +53,7 @@
 		<input type="text" id="participants_list" name="participants_list" value="<%= emails %>" size="50" readonly><br><br>
 		<% if event != [] %>
 		<% names = "" %>
-		<% names_list = event[0][8].split(/\//) %>
+		<% names_list = event[0][9].split(/\//) %>
 		<% names_list.each do |name| %>
 		<% names = names + name + ";" %>
 		<% end %>
