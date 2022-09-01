@@ -32,7 +32,7 @@
 			<option value=""></option>
 			<% contacts.each do |contact| %>
 				<% email = contact[10].scan(/(?<=email:).+/) %>
-				<% phone = contact[11].scan(/(?<=:).+/) %>
+				<% phone = contact[11].scan(/(?<=phone:).+/) %>
 				<% participant = email[0].to_s + "/" + contact[1] + "/" + phone[0].to_s %>
 				<option value="<%=participant%>"><%=email[0]%></option>
 			<% end %>
