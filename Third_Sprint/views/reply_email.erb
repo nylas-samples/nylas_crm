@@ -1,0 +1,37 @@
+<form method="post" action='/send_email' enctype="multipart/form-data">
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+	<input type="hidden" id="reply_to" name="reply_to" value="<%= email.id %>">
+	<label for="subject"><b>Subject: </b></label>
+	<input type="text" id="subject" name="subject" value="Re: <%= email.subject %>" size="50" readonly><br><br>
+	<label for="subject"><b>From Name: </b></label>
+	<input type="text" id="subject" name="subject" value="<%= email.from.first.name %>" readonly><br><br>
+	<label for="subject"><b>From Email: </b></label>
+	<input type="text" id="subject" name="subject" value="<%= email.from.first.email %>" size="30" readonly><br><br>
+		<div id="editor" ></div>
+		<script src="https://unpkg.com/pell"></script>
+		<textarea name="body" id="body" rows=5 cols=49 style="display:none;"></textarea>
+</div><br>
+<div class="flex justify-center">
+ <button type="submit" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full">Submit</button>
+ <button type="button" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="location.href='/read_email?email=<%= email.id %>'">Cancel</button> 
+ </div>
+</form>
+</div>
+<script>
+const pell = window.pell;
+const editor = document.getElementById("editor");
+const area = document.getElementById("body");
+
+pell.init({
+  element: editor,
+  onChange: (html) => {
+    area.innerText = html;
+  }  
+})
+
+var pellc = document.getElementsByClassName('pell-content'),
+i = pellc.length;
+while(i--) {
+pellc[i].innerHTML = "<br><br>-- <br> On <%= email.date %> <%= email.from.first.name%> <email.from.first.email> wrote: <br><br> <%= email.snippet %>";
+}
+</script>

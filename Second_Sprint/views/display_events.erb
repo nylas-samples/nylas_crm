@@ -1,0 +1,57 @@
+<br>
+<div style="height: 900px;" class="bg-blue-300 border-blue-300 border-b p-4 m-4 rounded place-content-center max-h-full">
+<table class="table-auto">
+<thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Location</th>
+      <th>Start Date</th>
+      <th>Start Time</th>
+      <th>End Date</th>
+      <th>End Time</th>
+      <th>Participants Emails</th>
+      <th>Participants Names</th>
+      <th>Participants Phones</th>
+      <th>Email Reminder</th>
+      <th>Minutes</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% events.each do |item| %>
+		<tr>
+			<td>
+				<a href="/update_event?id=<%= item[0] %>" class="text-blue-600 visited:text-purple-600">Update</a> | <a href="/delete_event?id=<%= item[0] %>" class="text-blue-600 visited:text-purple-600">Delete</a>
+			</td>
+			<td><%= item[1] %></td>
+			<td><%= item[2] %></td>
+			<td><%= item[3] %></td>
+			<td><%= item[4] %></td>
+			<td><%= item[5] %></td>
+			<td><%= item[6] %></td>
+			<td><%= item[7] %></td>
+			<td><%= item[8] %></td>
+			<td><%= item[9] %></td>
+			<td><%= item[10] %></td>
+			<td><%= item[11] %></td>
+			<td><%= item[12] %></td>
+		</tr>
+	<% end %>
+  </tbody>
+</table>
+<br>
+<div class="flex justify-center">
+<button class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_events?limit=0'">
+  First
+</button>&nbsp;&nbsp;&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_events?limit=<% aux_limit = limit.to_i %><% if aux_limit > 0%><% aux_limit = aux_limit - settings.limit %><% end %><%= aux_limit %>'">
+  Previous
+</button>&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_events?limit=<% if limit.to_i <= (tops.to_i / settings.limit )%><% limit = limit.to_i + settings.limit %><% end %><%= limit %>'">
+  &nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;&nbsp;
+</button>&nbsp;&nbsp;&nbsp;
+<button class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_events?limit=<%= tops = (tops.to_i / settings.limit) + 1  %>'">
+  Last
+</button>
+</div>

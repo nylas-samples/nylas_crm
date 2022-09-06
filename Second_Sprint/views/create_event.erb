@@ -1,0 +1,146 @@
+<form method="post" action='/create_update_event' enctype="multipart/form-data">
+<div class="border-double border-4 border-sky-500 w-auto h-auto items-center place-content-center flex justify-center">
+<h1 class="text-3xl"><% title = action.capitalize() %><%= title %> event</h1>
+</div>
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+	<input type="hidden" id="action" name="action" value="<%= action %>">
+	<input type="hidden" id="id" name="id" value="<% if event != [] %><%= event[0][0] %><% end %>">
+	<label for="given_name"><b>Title:</b></label>
+	<input type="text" id="title" name="title" value="<% if event != [] %><%= event[0][1] %><% end %>" size="50"><br><br>
+	<label for="given_name"><b>Description:</b></label>
+	<input type="text" id="description" name="description" value="<% if event != [] %><%= event[0][2] %><% end %>" size="50"><br><br>	
+	<label for="given_name"><b>Location:</b></label>
+	<input type="text" id="location" name="location" value="<% if event != [] %><%= event[0][3] %><% end %>" size="40"><br><br>
+	<label for="start"><b>Start Date:</b></label>
+	<input type="date" id="start_date" name="start_date"
+       value="<% if event != [] %><%= event[0][4] %><% end %>"
+       min="1900-01-01" max="">	
+	<label for="start_time"><b>Start Time:</b></label>
+	<input type="time" id="start_time" name="start_time"
+		min="08:00" max="20:00" value=<% if event != [] %><%= event[0][5] %><% end %>><br><br>
+	<label for="start"><b>End Date:</b></label>
+	<input type="date" id="end_date" name="end_date"
+       value="<% if event != [] %><%= event[0][6] %><% end %>"
+       min="1900-01-01" max="">
+	<label for="end_time"><b>End Time:</b></label>
+	<input type="time" id="end_time" name="end_time"
+		min="08:00" max="20:00" value="<% if event != [] %><%= event[0][7] %><% end %>"><br><br>
+</div>
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+	<label for="participants"><b>Participants:</b></label>
+		<select name="participants" id="participants">
+			<option value=""></option>
+			<% contacts.each do |contact| %>
+				<% email = contact[10].scan(/(?<=email:).+/) %>
+				<% phone = contact[11].scan(/(?<=phone:).+/) %>
+				<% participant = email[0].to_s + "/" + contact[1] + "/" + phone[0].to_s %>
+				<option value="<%=participant%>"><%=email[0]%></option>
+			<% end %>
+		</select>
+		<div class="bg-blue-300 border-blue-300 border-b p-4 m-4 rounded place-content-center max-h-full flex justify-center items-center">
+			<button type="button" onclick="addRecipient()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add One</button>
+			&nbsp<button type="button" onclick="addAllRecipients()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add All</button>
+			&nbsp<button type="button" onclick="Clear()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Clear</button>
+		</div>
+		<% if event != [] %>
+		<% emails = "" %>
+		<% participants_list = event[0][8].split(/\//) %>
+		<% participants_list.each do |participant| %>
+		<% emails = emails + participant + ";" %>
+		<% end %>
+		<% emails = emails.chomp(";") %>
+		<% end %>
+		<input type="text" id="participants_list" name="participants_list" value="<%= emails %>" size="50" readonly><br><br>
+		<% if event != [] %>
+		<% names = "" %>
+		<% names_list = event[0][9].split(/\//) %>
+		<% names_list.each do |name| %>
+		<% names = names + name + ";" %>
+		<% end %>
+		<% names = names.chomp(";") %>	
+		<% end %>	
+		<input type="text" id="names_list" name="names_list" value="<%= names %>" size="50" readonly><br><br>
+		<% if event != [] %>
+		<% phones = "" %>
+		<% phones_list = event[0][10].split(/\//) %>
+		<% phones_list.each do |phone| %>
+		<% phones = phones + phone + ";" %>
+		<% end %>
+		<% phones = phones.chomp(";") %>		
+		<% end %>
+		<input type="text" id="phones_list" name="phones_list" value="<%= phones %>" size="50" readonly><br><br>
+</div>
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+		<input type="checkbox" id="email_notification" name="email_notification" value="email_notification">
+		<label for="email_notification"> <b>Remind participants via email</b></label>
+		<label for="email_before"><b> - Minutes before event:</b></label>
+		<select name="email_before" id="email_before">
+		<option value="10">10</option>
+		<option value="30">30</option>
+		<option value="60">60</option>
+		<option value="90">90</option>
+		<option value="120">120</option>
+		</select><br>
+</div>
+ <div class="flex justify-center">
+ <button type="submit" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full">Submit</button>
+ <button type="button" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="window.location.href='/display_events?limit=0'">Cancel</button> 
+ </div>
+</form>
+<script>
+	if (document.getElementById("action") == "create"){
+		var birthday = document.getElementById("birthday");
+		var utc = new Date().toJSON().slice(0,10);
+		start_date.value = utc;
+		end_date.value = utc;
+	}
+	
+	function addRecipient() {
+		var myReEmail = /^[^/]*/g;
+		var email = myReEmail.exec(document.getElementById("participants").value);
+		document.getElementById("participants_list").value = document.getElementById("participants_list").value + email + ";";
+		
+		var myReName = /\/.*?\//g;
+		var name = myReName.exec(document.getElementById("participants").value);
+		name = name.toString().substring(1);
+		name = name.slice(0,-1);
+		document.getElementById("names_list").value = document.getElementById("names_list").value + name + ";";
+		
+		var myRePhone = /\+.*/g
+		var phone = myRePhone.exec(document.getElementById("participants").value);
+		phone = phone.toString().replace(/\-/gi,"");
+		phone = phone.toString().replace(/\s/g,"");
+		document.getElementById("phones_list").value = document.getElementById("phones_list").value + phone + ";";
+	}
+	
+	function addAllRecipients() {
+	var participants = document.getElementById("participants");
+    for (var i = 0; i < participants.length; i++) {
+		var myReEmail = /^[^/]*/g;
+		var myReName = /\/.*?\//g;
+		var myRePhone = /\+.*/g
+		var email = myReEmail.exec(participants.options[i].value);
+		if(!!email && email != ''){
+			document.getElementById("participants_list").value = document.getElementById("participants_list").value + email + ";";
+		}
+		var name = myReName.exec(participants.options[i].value);
+		if(!!name){
+			name = name.toString().substring(1);
+			name = name.slice(0,-1);
+			document.getElementById("names_list").value = document.getElementById("names_list").value + name + ";";
+		}
+		var phone = myRePhone.exec(participants.options[i].value);
+        if(!!phone){
+			phone = phone.toString().replace(/\-/gi,"");
+			phone = phone.toString().replace(/\s/g,"");
+			document.getElementById("phones_list").value = document.getElementById("phones_list").value + phone + ";";
+        }
+    }		
+	}
+	
+	function Clear(){
+		document.getElementById("participants_list").value = "";
+		document.getElementById("names_list").value = "";
+		document.getElementById("phones_list").value = "";
+	}
+</script>

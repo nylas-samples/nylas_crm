@@ -1,0 +1,25 @@
+<div style="height: 900px;" class="bg-blue-300 border-blue-300 border-b p-4 m-4 rounded place-content-center max-h-full">
+<div class="flex justify-center border-double border-4 border-sky-500">
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/reply_email?email=<%= email.id %>'">
+  Reply
+</button>&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/delete_email?email=<%= email.id %>'">
+  Delete
+</button>&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_emails'">
+  Cancel
+</button>
+</div>
+<div class="border-double border-4 border-sky-500">
+	<label for="date"><b>Date / Time: </b></label>
+	<input type="text" id="date" name="date" value="<%= email.date %>" size="30" readonly><br><br>
+	<label for="subject"><b>Subject: </b></label>
+	<input type="text" id="subject" name="subject" value="<%= email.subject %>" size="50" readonly><br><br>
+	<label for="subject"><b>From Name: </b></label>
+	<input type="text" id="subject" name="subject" value="<%= email.from.first.name %>" readonly><br><br>
+	<label for="subject"><b>From Email: </b></label>
+	<input type="text" id="subject" name="subject" value="<%= email.from.first.email %>" readonly size="30"><br><br>
+	<div style="background-color: white">
+	<%= email.body %>
+</div>
+</div>

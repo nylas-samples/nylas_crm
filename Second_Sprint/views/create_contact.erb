@@ -1,0 +1,124 @@
+<form method="post" action='/create_update_contact' enctype="multipart/form-data">
+<div class="border-double border-4 border-sky-500 w-auto h-auto items-center place-content-center flex justify-center">
+<h1 class="text-3xl"><% title = action.capitalize() %><%= title %> contact</h1>
+</div>
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+  <input type="hidden" id="action" name="action" value="<%= action %>">
+  <input type="hidden" id="id" name="id" value="<% if contact != [] %><%= contact[0][0] %><% end %>">
+  <label for="given_name"><b>Given name:</b></label>
+  <input type="text" id="given_name" name="given_name" value="<% if contact != [] %><%= contact[0][1] %><% end %>"><br><br>
+  <label for="middle_name"><b>Middle name:</b></label>
+  <input type="text" id="middle_name" name="middle_name" value="<% if contact != [] %><%= contact[0][2] %><% end %>"><br><br>  
+  <label for="nickname"><b>Nickname:</b></label>
+  <input type="text" id="nickname" name="nickname" value="<% if contact != [] %><%= contact[0][3] %><% end %>"><br><br>
+  <label for="surname"><b>Last Name:</b></label>
+  <input type="text" id="surname" name="surname" value="<% if contact != [] %><%= contact[0][4] %><% end %>"><br><br>
+  <label for="start"><b>Birthday:</b></label>
+  <input type="date" id="birthday" name="birthday"
+       value="<% if contact != [] %><%= contact[0][5] %><% end %>"
+       min="1900-01-01" max=""><br><br>
+  <label for="notes"><b>Notes:</b></label><br>
+  <textarea id="notes" name="notes" rows="4" cols="50"><% if contact != [] %><%= contact[0][7] %><% end %></textarea><br><br>
+<!--  <label for="file">Profile picture:</label>
+  <input type="file" id="file" name="file">  -->
+</div>
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+  <label for="company_name"><b>Company name:</b></label>
+  <input type="text" id="company_name" name="company_name" value="<% if contact != [] %><%= contact[0][6] %><% end %>"><br><br>
+  <label for="job_title"><b>Job title:</b></label>
+  <input type="text" id="job_title" size="30" name="job_title" value="<% if contact != [] %><%= contact[0][13] %><% end %>"><br><br>
+  <label for="email_type"><b>Email type:</b></label>
+  <% email_array = ["work","personal", "other"] %>
+  <select name="email_type" id="email_type">
+  <% email_array.each do |email| %>
+		<% if contact != [] %>
+		<% email_type = contact[0][10].scan(/(?<=type:)(.*?,)/) %>
+		<% email_type = email_type[0][0].gsub(/,/,"") %>
+		<% end %>
+		<option value="<%= email %>" <% if email_type == email %> selected <% end %> > <%= email.capitalize() %></option>
+  <% end %>
+  </select>   
+  <label for="email"><b>Email:</b></label>
+  <input type="text" id="email" name="email" value="<% if contact != [] %><% email = contact[0][10].scan(/(?<=email:).+/) %><%= email[0] %><% end %>"><br><br>
+  <label for="phone_type"><b>Phone type:</b></label>
+  <% phone_array = ["business","home","Mobile"] %>
+  <select name="phone_type" id="phone_type">
+  <% phone_array.each do |phone| %>
+		<% if contact != [] %>
+		<% phone_type = contact[0][11].to_s.scan(/^[^:]*/) %>
+		<% end %>
+		<option value="<%= phone %>" <% if contact != [] %><% if phone_type == phone %> selected <% end %><% end %> > <%= phone.capitalize() %></option>
+  <% end %>
+  </select>  
+  <label for="phone"><b>Phone:</b></label>
+  <input type="text" id="phone" name="phone" value="<% if contact != [] %><% phone = contact[0][11].to_s.scan(/,.+/) %><% phone = phone.to_s.scan(/(?<=:).+/) %> <%= phone[0] %><% end %>"><br><br>   
+</div> 
+<div class="border-double border-4 border-sky-500 w-auto h-auto">
+  <label for="street_address"><b>Street Address:</b></label>
+  <input type="text" id="street_address" name="street_address" value="<% if contact != [] %><% street = contact[0][12].scan(/(?<=street_address:).+/) %><%= street[0] %><% end %>"><br><br>
+  <label for="city"><b>City:</b></label>
+  <input type="text" id="city" name="city" value="<% if contact != [] %><% city = contact[0][12].scan(/(?<=city:)(.*?,)/) %><% end %>
+<%
+  begin 
+  city = city[0][0].gsub(/,/,"") 
+  rescue => error 
+  city = ""
+  end  %><%= city %>"><br><br>
+  <label for="state"><b>State:</b></label>
+  <% state_array = ["","AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL",
+							  "GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
+							  "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+							  "NM","NY","NC","ND","OH","OK","OR","PA","PR","RI",
+							  "SC","SD","TX","UT","VT","VA","VI","WA","WV","WI",
+							  "WY","NL","PE","NS","NB","QC","ON","MB","SK","AB",
+							  "BC","YT","NT","NU"] %>
+  <select name="state" id="state">
+  <% state_array.each do |state| %>
+		<% if contact != [] %>
+			<% state_name = contact[0][12].scan(/(?<=state:)(.*?,)/) %>
+			<% if state_name != [] %>
+			<% state_name = state_name[0][0].gsub(/,/,"") %>
+			<% end %>
+		<% end %>
+		<option value="<%= state %>" <% if contact != [] %> <% if state_name == state %> selected <% end %> <% end %> > <%= state.upcase() %></option>
+  <% end %>
+  </select> 
+<br><br>
+  <label for="country"><b>Country:</b></label>
+  <% country_array = ["","US","CA"] %>
+  <select name="country" id="country">
+  <% country_array.each do |country| %>
+		<% if contact != [] %>
+		<% country_type = contact[0][12].scan(/(?<=country:)(.*?,)/)  %>
+		<%
+		begin
+		country_type = country_type[0][0].gsub(/,/,"") 
+		rescue => error
+		country_type = ""
+		end %>
+		<% end %>
+		<option value="<%= country %>" <% if country_type == country %> selected <% end %> > <%= country.upcase() %></option>
+  <% end %>
+  </select><br><br>
+  <label for="postal_code"><b>Postal Code:</b></label>
+  <input type="text" id="postal_code" name="postal_code" value="<% if contact != [] %><% postal = contact[0][12].scan(/(?<=postal_code:)(.*?,)/) %><% end %>
+<%
+  begin
+  postal = postal[0][0].gsub(/,/,"")
+  puts postal
+  rescue => error
+  postal = ""
+  end
+  %><%= postal%>">
+ </div>
+ <div class="flex justify-center">
+ <button type="submit" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full">Submit</button>
+ <button type="button" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="location.href='/display_contacts?limit=0'">Cancel</button> 
+ </div>
+</form>
+<script>
+	var birthday = document.getElementById("birthday");
+	var utc = new Date().toJSON().slice(0,10);
+	birthday.value = utc;
+	birthday.max = utc;
+</script>

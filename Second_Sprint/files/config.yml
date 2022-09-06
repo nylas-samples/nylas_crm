@@ -1,0 +1,9 @@
+# /config.yml
+crm_name: Gym Sports Goods CRM
+calendar_name: Nylas CRM Calendar
+calendar_description: Calendar for the Nylas CRM
+background_image: NylasDesktop.png 
+background_color: 4169E0
+panel_color: bg-blue-300
+panel_border: border-blue-300
+limit: 4

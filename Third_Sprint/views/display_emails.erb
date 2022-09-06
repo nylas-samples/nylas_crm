@@ -1,0 +1,47 @@
+<br>
+<div style="height: 900px;" class="bg-blue-300 border-blue-300 border-b p-4 m-4 rounded place-content-center max-h-full">
+<div class="flex justify-center" style="width: 220px">
+ <button type="submit" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="location.href='/display_emails'">Refresh</button>
+ <button type="button" class="block bg-blue-500 hover:bg-blue-700 text-white text-lg mx-auto py-2 px-4 rounded-full" onclick="location.href='/send_email'">Compose</button> 
+ </div><br>
+<table class="table-auto">
+<thead>
+    <tr>
+      <th>Date / Time</th>
+      <th>Subject</th>
+      <th>From Name</th>
+      <th>From Email</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% emails.each do |email| %>
+		<tr>
+			<td><%= email[1] %></td>
+			<% if email[5] == "true" %>
+			<td><b><i><a href="/read_email?email=<%= email[0] %>" class="text-blue-600 visited:text-purple-600"><%= email[2] %><a></i></b></td>
+						<% puts email[5] %>
+			<% else %>
+			<td><a href="/read_email?email=<%= email[0] %>" class="text-blue-600 visited:text-purple-600"><%= email[2] %><a></td>
+				<% puts email[5] %>
+			<% end %>
+			<td><%= email[3] %></td>
+			<td><%= email[4] %></td>
+		</tr>
+	<% end %>
+  </tbody>
+</table>
+<br>
+<div class="flex justify-center">
+<button class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_emails?email_limit=0'">
+  First
+</button>&nbsp;&nbsp;&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_emails?email_limit=<% aux_limit = email_limit.to_i %><% if aux_limit > 0%><% aux_limit = aux_limit - settings.email_limit %><% end %><%= aux_limit %>'">
+  Previous
+</button>&nbsp;
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_emails?email_limit=<% if email_limit.to_i <= (tops.to_i / settings.email_limit )%><% email_limit = email_limit.to_i + settings.email_limit %><% end %><%= email_limit %>'">
+  &nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;&nbsp;
+</button>&nbsp;&nbsp;&nbsp;
+<button class="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/display_emails?email_limit=<%= tops = (tops.to_i / settings.email_limit) + 1  %>'">
+  Last
+</button>
+</div>
