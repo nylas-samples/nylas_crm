@@ -73,6 +73,6 @@ Then run `Events --> Create CRM Calendar`. This will create a new calendar and s
 
 After that, you can run whatever you want.
 
-## Read the blog post
+## Read the blog posts
 
-## Learn more
+- [How to Build a CRM in 3 Sprints With Nylas](https://www.nylas.com/blog/how-to-build-crm-dev/)
