@@ -60,6 +60,9 @@ get '/sync_contacts' do
       end
       # Format the email by type
       begin
+		if contact.emails[0].type == nil
+			contact.emails[0].type = "work"
+		end
         emails = "type:#{contact.emails[0].type}, email:#{contact.emails[0].email}"
       rescue StandardError => e
         emails = ''
