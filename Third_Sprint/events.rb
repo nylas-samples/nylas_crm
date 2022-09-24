@@ -47,12 +47,10 @@ get '/create_calendar' do
     )
     # Open the .env file to add the calendar id of the newly created calendar
     File.open('.env', 'a') { |f| f.write "export CRM_CALENDAR_ID=#{calendar.id}" }
-    erb :calendar_created, layout: :layout,
-                           locals: { message: "The #{settings.calendar_name} has been created." }
+    erb :calendar_created, :layout => :layout,:locals => {:message => "The #{settings.calendar_name} has been created."}
   # Don't created again. It already exists.
   else
-    erb :calendar_created, layout: :layout,
-                           locals: { message: "The #{settings.calendar_name} already exists." }
+    erb :calendar_created, :layout => :layout,:locals => {:message => "The #{settings.calendar_name} already exists."}
   end
 end
 
@@ -71,7 +69,7 @@ get '/create_event' do
   # Specify that we're creating a new event
   action = 'create'
   # Call the create_event.erb page
-  erb :create_event, layout: :layout, locals: { contacts: contacts, event: event, action: action }
+  erb :create_event, :layout => :layout, :locals => {:contacts => contacts, :event => event, :action => action}
 end
 
 # This page will create or update a new events
@@ -203,7 +201,7 @@ get '/display_events' do
   # Close the DB connection
   connection.end_connection
   # Call the display_events.erb page
-  erb :display_events, layout: :layout, locals: { events: events, limit: limit, tops: tops }
+  erb :display_events, :layout => :layout, :locals => {:events => events, :limit => limit, :tops => tops}
 end
 
 # Delete an event using the id
@@ -241,5 +239,5 @@ get '/update_event' do
   # Set the action to update
   action = 'update'
   # Call the create_event page
-  erb :create_event, layout: :layout, locals: { event: event, contacts: contacts, action: action }
+  erb :create_event, :layout => :layout, :locals => {:event => event,:contacts => contacts, :action => action}
 end
